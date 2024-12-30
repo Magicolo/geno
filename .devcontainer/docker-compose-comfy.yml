@@ -1,0 +1,28 @@
+volumes:
+  comfy:
+    external: true
+
+services:
+  comfy:
+    image: comfy
+    build: ./comfy
+    ports:
+      - 8188:8188
+      - 7860:7860
+    volumes:
+      - ./comfy/input:/input
+      - ./comfy/Comfy:/comfy
+      - comfy:/root/.cache
+    entrypoint: python /comfy/main.py --listen 0.0.0.0 --port 8188
+    healthcheck:
+      test: curl http://localhost:8188
+      interval: 5s
+      timeout: 30s
+      retries: 10
+      start_period: 5s
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [ gpu ]
+              count: all

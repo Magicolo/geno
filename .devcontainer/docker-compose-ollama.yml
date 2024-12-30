@@ -1,0 +1,24 @@
+volumes:
+  ollama:
+    external: true
+
+services:
+  ollama:
+    image: ollama/ollama
+    volumes:
+      - ollama:/root/.ollama
+    ports:
+      - 11434:11434
+    restart: always
+    healthcheck:
+      test: ollama --version
+      interval: 5s
+      timeout: 30s
+      retries: 10
+      start_period: 5s
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [ gpu ]
+              count: all

@@ -1,0 +1,10 @@
+[package]
+name = "geno"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+clap = { version = "4.0.32", features = ["std", "derive"] }
+ollama-rs = { version = "0.2.1", features = ["stream"] }
+tokio = { version = "1.42.0", features = ["macros", "rt-multi-thread"] }
+tokio-stream = { version = "0.1.17" }

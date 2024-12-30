@@ -1,0 +1,7 @@
+services:
+  develop:
+    image: ghcr.io/magicolo/rust:latest
+    entrypoint: sleep infinity
+    user: goulade
+    volumes:
+      - ..:/workspaces/rust/geno

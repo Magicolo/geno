@@ -1,0 +1,90 @@
+{
+    "dockerComposeFile": [
+        "docker-compose.yml",
+        "docker-compose-ollama.yml",
+        "docker-compose-comfy.yml"
+    ],
+    "service": "develop",
+    "runServices": [
+        "ollama",
+        "comfy"
+    ],
+    "workspaceFolder": "/workspaces/rust/geno",
+    "containerUser": "${localEnv:USER}",
+    "remoteUser": "${localEnv:USER}",
+    "remoteEnv": {
+        "CARGO_TARGET_DIR": "/workspaces/rust/target"
+    },
+    "containerEnv": {
+        "CARGO_TARGET_DIR": "/workspaces/rust/target"
+    },
+    "mounts": [
+        {
+            "source": "${localEnv:HOME}/.ssh",
+            "target": "${localEnv:HOME}/.ssh",
+            "type": "bind"
+        },
+        {
+            "source": "${localEnv:HOME}/.gitconfig",
+            "target": "${localEnv:HOME}/.gitconfig",
+            "type": "bind"
+        },
+        {
+            "source": "../../target",
+            "target": "/workspaces/rust/target",
+            "type": "bind"
+        }
+    ],
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils": {
+            "configureZshAsDefaultShell": true
+        },
+        "ghcr.io/devcontainers/features/docker-outside-of-docker": {},
+        "ghcr.io/devcontainers/features/github-cli": {}
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "streetsidesoftware.code-spell-checker",
+                "github.vscode-github-actions",
+                "PKief.material-icon-theme",
+                "mutantdino.resourcemonitor",
+                "ms-azuretools.vscode-docker",
+                "yzhang.markdown-all-in-one",
+                "mhutchie.git-graph",
+                "vadimcn.vscode-lldb",
+                "fill-labs.dependi",
+                "rust-lang.rust-analyzer",
+                "Swellaby.vscode-rust-test-adapter",
+                "tamasfe.even-better-toml",
+                "ryanluker.vscode-coverage-gutters",
+                "usernamehw.errorlens",
+                "Gruntfuggly.todo-tree",
+                "GitHub.copilot"
+            ],
+            "settings": {
+                "rust-analyzer.check.command": "clippy",
+                "rust-analyzer.showUnlinkedFileNotification": false,
+                "rust-analyzer.imports.preferNoStd": true,
+                "rust-analyzer.testExplorer": true,
+                "rust-analyzer.rustfmt.overrideCommand": [
+                    "bash",
+                    "-c",
+                    "$(rustup which --toolchain nightly rustfmt) --config unstable_features=true --config version='Two' --config wrap_comments=true --config imports_granularity='Crate' --config format_code_in_doc_comments=true --config format_strings=true --config reorder_impl_items=true --config group_imports='One' ${file}"
+                ],
+                "editor.formatOnPaste": true,
+                "editor.formatOnSave": true,
+                "editor.formatOnSaveMode": "file",
+                "testExplorer.useNativeTesting": true,
+                "files.watcherExclude": {
+                    "**/target/**": true
+                },
+                "errorLens.enabledDiagnosticLevels": [
+                    "error",
+                    "warning"
+                ],
+                "todo-tree.regex.regex": "(//|#|<!--|;|/\\*|^|^[ \\t]*(-|\\d+.))\\s*($TAGS)|todo!|unimplemented!"
+            }
+        }
+    }
+}
